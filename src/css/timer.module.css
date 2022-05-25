@@ -1,0 +1,49 @@
+.timer-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  height: 250px;
+  color: #eeefee;
+  font-size: 2rem;
+  border: 2px solid;
+  border-radius: 50%;
+  box-shadow: 0 0 45px 0 #000121;
+  background: #00012aba;
+}
+.timer-display > :first-child {
+  margin-block-end: 0;
+}
+.timer-display > :nth-child(2) {
+  margin-block-end: 0;
+  margin-block-start: 1rem;
+  text-transform: uppercase;
+}
+.timer-display > :nth-child(2) > :first-child {
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+.break-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #9b5de5;
+  padding: 0.5rem 2rem;
+  margin-top: 1rem;
+  border-radius: 0.4rem;
+}
+
+.break-display > :first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: auto;
+  margin-top: auto;
+  text-transform: uppercase;
+}
+.break-display > :first-child > :last-child {
+  color: #eeefee;
+  font-weight: bold;
+}
