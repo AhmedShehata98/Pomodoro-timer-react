@@ -1,9 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import Timer from "./Timer";
 import styles from "../css/pomodoro.module.css";
+import useAudio from "../hooks/useAudio";
+
+import finishedTimerSound from "../assets/sounds/finished-timer.mp3";
+import finishedBreakSound from "../assets/sounds/finished-break.mp3";
 
 const Pomodoro = () => {
   const [start, setStart] = useState(false);
+  const [alertType, setalertType] = useState(false); // false => timer type
+  const [isPlaying, togglePlaying] = useAudio(
+    alertType === false ? finishedTimerSound : finishedBreakSound
+  );
+
   const [cycles, setCycles] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -14,7 +23,7 @@ const Pomodoro = () => {
 
   const startTimer = () => {
     return setInterval(() => {
-      setSeconds((prev, next) => prev + 1);
+      setSeconds((prev) => prev + 1);
     }, 1000);
   };
 
@@ -54,12 +63,13 @@ const Pomodoro = () => {
       setMinutes(0);
       setSeconds(0);
       stopTimer();
+      togglePlaying();
       setBreakInterval(startBreak());
     }
     if (cycles >= 4) {
       stopTimer();
     }
-  }, [seconds]);
+  }, [seconds, minutes, cycles]);
 
   // Break timer effect
   useEffect(() => {
@@ -69,6 +79,8 @@ const Pomodoro = () => {
     }
     if (breakMinutes >= 5) {
       stopBreak();
+      setalertType(true);
+      togglePlaying();
     }
   }, [breakSeconds]);
 
@@ -91,6 +103,7 @@ const Pomodoro = () => {
         breakSeconds={breakSeconds}
         breakMinutes={breakMinutes}
       />
+
       <div className={styles["buttons-wrapper"]}>
         <button type="button" onClick={() => handleStartPomodoro()}>
           {start === false ? "start" : "stop"}
